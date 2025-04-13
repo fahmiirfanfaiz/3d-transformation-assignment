@@ -1,8 +1,30 @@
 from transformations import *
-from wireframe import create_cube, plot_wireframe, animate_transformation
+from wireframe import create_cube, create_prism, create_pyramid, create_sphere, input_custom_points, plot_wireframe, animate_transformation
 
 def main():
-    original_vertices, edges = create_cube()
+    print("Pilih objek awal:")
+    print("1. Kubus")
+    print("2. Piramida (Limas Segiempat)")
+    print("3. Prisma Segitiga")
+    print("4. Sphere (Oktahedron)")
+    print("5. Input Custom")
+    
+    choice = int(input("Pilihan (1-5): "))
+    
+    if choice == 1:
+        original_vertices, edges = create_cube()
+    elif choice == 2:
+        original_vertices, edges = create_pyramid()
+    elif choice == 3:
+        original_vertices, edges = create_prism()
+    elif choice == 4:
+        original_vertices, edges = create_sphere()
+    elif choice == 5:
+        original_vertices, edges = input_custom_points()
+    else:
+        print("Pilihan tidak valid, menggunakan kubus default")
+        original_vertices, edges = create_cube()
+    
     vertices = original_vertices.copy()
     history = []
 
