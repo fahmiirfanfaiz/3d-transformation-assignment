@@ -58,17 +58,35 @@ def main():
             vertices = new_vertices
 
         elif choice == 6:
-            shx, shy = map(float, input("Masukkan shx shy: ").split())
-            new_vertices = shear(vertices, shx, shy)
+            print("Pilih jenis shearing:")
+            print("1. XY Shearing")
+            print("2. XZ Shearing")
+            print("3. YZ Shearing")
+            shear_type = int(input("Masukkan pilihan (1-3): "))
+            
+            if shear_type == 1:
+                shx, shy = map(float, input("Masukkan shx shy: ").split())
+                new_vertices = shear_xy(vertices, shx, shy)
+            elif shear_type == 2:
+                shx, shz = map(float, input("Masukkan shx shz: ").split())
+                new_vertices = shear_xz(vertices, shx, shz)
+            elif shear_type == 3:
+                shy, shz = map(float, input("Masukkan shy shz: ").split())
+                new_vertices = shear_yz(vertices, shy, shz)
+            else:
+                print("Pilihan tidak valid.")
+                continue
+                
+            animate_transformation(vertices, new_vertices, edges)
             history.append(vertices)
             vertices = new_vertices
-            plot_wireframe(vertices, edges)
 
         elif choice == 7:
             n = int(input("Berapa banyak transformasi berturut-turut? "))
             history.append(vertices)
-            for _ in range(n):
-                sub_choice = int(input("Transformasi ke-{} (1: Translasi, 2: Skala, 3: RX, 4: RY, 5: RZ, 6: Shear): ".format(_+1)))
+            for i in range(n):
+                print(f"\nTransformasi ke-{i+1}:")
+                sub_choice = int(input("Pilih jenis (1: Translasi, 2: Skala, 3: RX, 4: RY, 5: RZ, 6: Shear): "))
                 if sub_choice == 1:
                     dx, dy, dz = map(float, input("  Masukkan dx dy dz: ").split())
                     vertices = translate(vertices, dx, dy, dz)
@@ -85,9 +103,22 @@ def main():
                     angle = float(input("  Masukkan sudut RZ: "))
                     vertices = rotate_z(vertices, angle)
                 elif sub_choice == 6:
-                    shx, shy = map(float, input("  Masukkan shx shy: ").split())
-                    vertices = shear(vertices, shx, shy)
+                    print("  Pilih jenis shearing:")
+                    print("  1. XY Shearing")
+                    print("  2. XZ Shearing")
+                    print("  3. YZ Shearing")
+                    shear_type = int(input("  Masukkan pilihan (1-3): "))
+                    if shear_type == 1:
+                        shx, shy = map(float, input("  Masukkan shx shy: ").split())
+                        vertices = shear_xy(vertices, shx, shy)
+                    elif shear_type == 2:
+                        shx, shz = map(float, input("  Masukkan shx shz: ").split())
+                        vertices = shear_xz(vertices, shx, shz)
+                    elif shear_type == 3:
+                        shy, shz = map(float, input("  Masukkan shy shz: ").split())
+                        vertices = shear_yz(vertices, shy, shz)
             plot_wireframe(vertices, edges)
+
 
         elif choice == 8:
             if history:

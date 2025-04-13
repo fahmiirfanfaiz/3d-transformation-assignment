@@ -48,11 +48,29 @@ def rotate_z(points, angle):
     ])
     return apply_transformation(points, matrix)
 
-def shear(points, shx, shy):
+def shear_xy(points, shx, shy):
     matrix = np.array([
         [1, shx, 0, 0],
         [shy, 1, 0, 0],
         [0, 0, 1, 0],
+        [0, 0, 0, 1]
+    ])
+    return apply_transformation(points, matrix)
+
+def shear_xz(points, shx, shz):
+    matrix = np.array([
+        [1, 0, shx, 0],
+        [0, 1, 0, 0],
+        [shz, 0, 1, 0],
+        [0, 0, 0, 1]
+    ])
+    return apply_transformation(points, matrix)
+
+def shear_yz(points, shy, shz):
+    matrix = np.array([
+        [1, 0, 0, 0],
+        [0, 1, shy, 0],
+        [0, shz, 1, 0],
         [0, 0, 0, 1]
     ])
     return apply_transformation(points, matrix)
